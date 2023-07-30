@@ -45,7 +45,7 @@ python train.py --batch_size 2 --experiment_name two-shape-ldif \
 
 python eval.py --dataset_directory ${d}/output_dataset \
   --model_directory ${d}/models --experiment_name two-shape-ldif \
-  --split train --log_level verbose --use_inference_kernel --result_directory \
+  --split train --log_level verbose --nouse_inference_kernel --result_directory \
   ${d}/results --save_ldifs --save_results --save_meshes --visualize
 
 

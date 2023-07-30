@@ -51,17 +51,17 @@ flags.DEFINE_string(
     ' passed to meshes2dataset.py to create the dataset.')
 
 flags.DEFINE_string(
-    'result_directory', '', 'The directory where result files'
+    'result_directory', 'output', 'The directory where result files'
     ' should be written. Only necessary if one of the save_'
     ' flags is set to true (all are false by default).')
 
 flags.DEFINE_boolean(
-    'save_meshes', False, 'If true, the output meshes will'
+    'save_meshes', True, 'If true, the output meshes will'
     ' be written to the result directory with a structure mirroring'
     ' the dataset directory.')
 
 flags.DEFINE_boolean(
-    'save_ldifs', False, 'If provided, the output ldif.txt files'
+    'save_ldifs', True, 'If provided, the output ldif.txt files'
     ' will be written to the result directory with a structure'
     ' mirroring the dataset directory. Should not be the same'
     ' directory as save_meshes_to if provided.')
@@ -85,7 +85,7 @@ flags.DEFINE_boolean(
     ' because it uses only a very a small amount of VRAM.')
 
 flags.DEFINE_boolean(
-    'use_inference_kernel', True, 'Whether to enable use'
+    'use_inference_kernel', False, 'Whether to enable use'
     ' of the custom CUDA kernel for LDIF inference. Note that'
     ' to be used, it must first be compiled (this step should'
     ' hopefully be easy, see the README for more details).'

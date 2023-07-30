@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -e
+set -e # shell config
 set -v
 
 # CD inside the ldif/ldif python package
@@ -57,8 +57,8 @@ fi
 # Everything is local to GAPS from this point:
 cd gaps
 
-# Ptsview and qview aren't built by default, adjust the makefile to build them.
-# sed commands are for script idempotency
+# # Ptsview and qview aren't built by default, adjust the makefile to build them.
+# # sed commands are for script idempotency
 sed -i.bak '/ptsview/d' ./apps/Makefile
 sed -i.bak '/qview/d' ./apps/Makefile
 echo "	cd ptsview; \$(MAKE) \$(TARGET)" >> ./apps/Makefile
@@ -66,9 +66,11 @@ echo "	cd qview; \$(MAKE) \$(TARGET)" >> ./apps/Makefile
 
 # Make GAPS (assuming 8 threads):
 # On MacOS, using OSMesa is more difficult, so we don't
-if [[ ! $(uname -s) == Darwin* ]]
+if [[ $(uname -s) == Darwin* ]]
 then
-  make mesa -j8
+  echo "making mesa"
+  # make mesa -j8
 else
+  # make clean
   make -j8
 fi

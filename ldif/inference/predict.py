@@ -468,7 +468,7 @@ class Decoder(TrainedNetwork):
     if not has_implicits:
       assert shape_len == 10
       implicit_len = 0
-    sif_vector[:, 4:7] = np.sqrt(np.maximum(sif_vector[:, 4:7], 0))
+    sif_vector[:, 4:7] = np.sqrt(np.maximum(sif_vector[:, 4:7], 0)) # (AT): txt stores sqrt radius. See file_util.py ->read_sif_v1() for inverse
 
     header = 'SIF\n%i %i %i\n' % (shape_count, 0, implicit_len)
     out = header

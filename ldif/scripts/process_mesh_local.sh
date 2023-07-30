@@ -14,6 +14,7 @@
 # limitations under the License.
 
 set -e
+set -v
 
 mesh_in=$1
 outdir=$2
@@ -38,7 +39,7 @@ ln -s $mesh_in $mesh_orig
 
 mesh=${outdir}/model_normalized.obj
 # Step 0) Normalize the mesh before applying all other operations.
-${gaps}/msh2msh $mesh_orig $mesh -scale_by_pca -translate_by_centroid \
+${gaps}/msh2msh $mesh_in $mesh -scale_by_pca -translate_by_centroid \
   -scale 0\.25 -debug_matrix ${outdir}/orig_to_gaps.txt
 
 # Step 1) Generate the coarse inside/outside grid:

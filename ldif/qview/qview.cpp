@@ -36,7 +36,7 @@ static const char *output_image_filename = NULL;
 static RNScalar background_color[3] = {1, 1, 1};
 static int evaluation_method = R3_QUADRIC_SET_WEIGHTED_VALUE;
 static int resolution = 256;
-static int print_verbose = 0;
+static int print_verbose = 1;
 
 // GLUT variables
 static int GLUTwindow = 0;
@@ -123,6 +123,7 @@ static R3QuadricSet *ReadQuadrics(const char *filename) {
 }
 
 static R3Mesh *ReadMesh(const char *filename) {
+  printf("here3\n");
   // Start statistics
   RNTime start_time;
   start_time.Read();
@@ -718,6 +719,7 @@ static void GLUTKeyboard(unsigned char key, int x, int y) {
 
 static void GLUTInit(int *argc, char **argv) {
   // Open window
+  printf("here00\n");
   glutInit(argc, argv);
   glutInitWindowPosition(100, 100);
   glutInitWindowSize(GLUTwindow_width, GLUTwindow_height);
@@ -764,6 +766,7 @@ static void GLUTInit(int *argc, char **argv) {
 }
 
 static R3Viewer *CreateViewer(void) {
+  printf("here1\n");
   // Start statistics
   RNTime start_time;
   start_time.Read();

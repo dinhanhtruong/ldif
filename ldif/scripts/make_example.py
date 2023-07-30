@@ -48,7 +48,7 @@ def write_depth_and_normals_npz(dirpath, path_out):
   arr = np.concatenate([depth_images, normal_images], axis=-1)
   np.savez_compressed(path_out, arr)
   # Delete the images, they are no longer needed:
-  remove_png_dir(f'{dirpath}/depth_images')
+  # remove_png_dir(f'{dirpath}/depth_images')
   remove_png_dir(f'{dirpath}/normals')
 
 
@@ -58,9 +58,11 @@ def mesh_to_example(codebase_root_dir, mesh_path, dirpath, skip_existing, log_le
   log.set_level(log_level)
   ldif_path = path_util.get_path_to_ldif_root()
   if not skip_existing or not os.path.isfile(f'{dirpath}/depth_and_normals.npz'):
-    sp.check_output(
-      f'{codebase_root_dir}/scripts/process_mesh_local.sh {mesh_path} {dirpath} {ldif_path}',
+    stdout = sp.check_output(
+      f'bash {codebase_root_dir}/scripts/process_mesh_local.sh {mesh_path} {dirpath} {ldif_path}',
         shell=True)
+    # print("======== STDOUT: ")
+    # print(stdout)
     write_depth_and_normals_npz(dirpath, f'{dirpath}/depth_and_normals.npz')
   else:
     log.verbose(f'Skipping shell script processing for {dirpath},'

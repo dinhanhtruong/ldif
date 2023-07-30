@@ -20,6 +20,7 @@ The dataset can be used for training, evaluation, and inference on ldif models.
 import glob
 import random
 import os
+import subprocess as sp
 
 from absl import app
 from absl import flags
@@ -133,6 +134,13 @@ def main(argv):
 
   # Make the directories first because it's not threadsafe and also might fail.
   if files and not FLAGS.optimize_only:
+    # TEMP: (AT): compile with mesa for compatibility with depth renering
+    print("compiling GAPS with mesa...")
+    sp.check_output(
+      f'ldif/scripts/compile_with_mesa.sh',
+        shell=True)
+    #######
+    
     log.info('Creating directories...')
     for i, f in tqdm.tqdm(enumerate(files)):
       relpath = f.replace(mesh_directory, '')
@@ -162,6 +170,12 @@ def main(argv):
     with open(f'{FLAGS.dataset_directory}/{split}.txt', 'wt') as f:
       f.write('\n'.join(elements_of_split) + '\n')
   log.info('Done!')
+  # TEMP: (AT): compile with mesa for compatibility with depth renering
+  print("compiling GAPS with glut...")
+  sp.check_output(
+    f'ldif/scripts/compile_with_glut.sh',
+      shell=True)
+  #######
 
   if FLAGS.optimize:
     log.info('Precomputing optimized tfrecord files...')
@@ -201,3 +215,4 @@ def main(argv):
 
 if __name__ == '__main__':
   app.run(main)
+  
