@@ -48,7 +48,7 @@ def write_depth_and_normals_npz(dirpath, path_out):
   arr = np.concatenate([depth_images, normal_images], axis=-1)
   np.savez_compressed(path_out, arr)
   # Delete the images, they are no longer needed:
-  # remove_png_dir(f'{dirpath}/depth_images')
+  remove_png_dir(f'{dirpath}/depth_images')
   remove_png_dir(f'{dirpath}/normals')
 
 
