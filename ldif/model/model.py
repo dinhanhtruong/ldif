@@ -263,7 +263,7 @@ class StructuredImplicitModel(object):
       raise ValueError(
           'Invalid StructuredImplicitModel architecture hparam: %s' %
           model_config.hparams.arch)
-    if model_config.hparams.ipe in ['t', 'e']:
+    if model_config.hparams.ipe in ['t', 'e']:  # AT: enable implicit feats for LDIF
       self.single_element_implicit_eval_fun = occnet.occnet_decoder
     else:
       self.single_element_implicit_eval_fun = None
@@ -384,7 +384,7 @@ class StructuredImplicitModel(object):
         element_embedding_length]. The embedding associated with each element.
       samples: Tensor with shape [batch_size, element_count, sample_count, 3].
         The sample locations. Each embedding vector will be decoded at each of
-        its sample locations.
+        its sample locations.  #AT: local query pts per gaussian
 
     Returns:
       Tensor with shape [batch_size, element_count, sample_count, 1]. The
@@ -411,7 +411,7 @@ class StructuredImplicitModel(object):
             implicit_parameters.get_shape().as_list())
         sample_count = samples.get_shape().as_list()[-2]
         batched_parameters = tf.reshape(
-            implicit_parameters,
+            implicit_parameters, #AT: group first two dimensions to get [all_el_count, feat_dim]
             [batch_size * element_count, element_embedding_length])
         batched_samples = tf.reshape(
             samples, [batch_size * element_count, sample_count, 3])

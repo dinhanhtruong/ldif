@@ -510,11 +510,14 @@ def build_ldif_hparams():
   d['cnna'] = 's50'
   d['hyo'] = 'f'
   d['hyp'] = 'f'
-  d['sc'] = 32
-  d['lyr'] = 16
+  d['sc'] = 32 #TEMP: double num gaussians
+  # d['sc'] = 64 #TEMP: double num gaussians
+  # d['lyr'] = 16  # TEMP: disable symetry
+  d['lyr'] = 0  # TEMP: disable symetry
   d['loss'] = 'unsbbgi'
   d['mfc'] = 512
-  d['ips'] = 32
+  # d['ips'] = 32 #TEMP:
+  d['ips'] = 64 #TEMP: double latent size
   d['ipe'] = 't'
   return tf.contrib.training.HParams(**d)
 

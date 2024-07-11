@@ -424,6 +424,19 @@ def multishape_occnet_decoder(embedding, samples, apply_sigmoid, model_config):
     sample_embedding_length = model_config.hparams.ips
     resnet_layer_count = model_config.hparams.orc
     with tf.variable_scope('sample_resize_fc'):
+      # AT: temp apply SPAGHETTI-style learned positional (frequency) encoding to LOCAL decoder query x
+      samples = layers.fully_connected(
+          inputs=samples,
+          num_outputs=128,
+          weights_initializer=tf.compat.v1.random_uniform_initializer(
+              minval=-1/3,  # 1/in_feat_dim 
+              maxval=1/3),
+          activation_fn=None,
+          normalizer_fn=None,
+          normalizer_params=None)
+      samples = tf.math.sin(30 * samples) #SPAGHETTI uses magic const = 30
+
+      # proceed as usual
       sample_embeddings = layers.fully_connected(
           inputs=samples,
           num_outputs=sample_embedding_length,
@@ -483,7 +496,7 @@ def occnet_decoder(embedding, samples, apply_sigmoid, model_config):
     sample_len = 60
   else:
     sample_len = 3
-  if model_config.hparams.dd == 't':
+  if model_config.hparams.dd == 't': # AT: deprecated
     tf.logging.info(
         'BID0: Running SS Occnet Decoder with input shapes embedding=%s, samples=%s',
         repr(embedding.get_shape().as_list()),

@@ -239,7 +239,7 @@ def main(argv):
       # unnormalized (where 'gaps' is the normalized training frame and 'occnet'
       # is whatever the original frame of the input mesh was)
       post_extract_start = time.time()
-      mesh.apply_transform(e.gaps2occnet)
+      # mesh.apply_transform(e.gaps2occnet)
   
       if FLAGS.save_meshes:
         path = (f'{FLAGS.result_directory}/meshes/{split}/{e.cat}/'
